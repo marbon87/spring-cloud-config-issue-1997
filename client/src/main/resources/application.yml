@@ -1,0 +1,20 @@
+server:
+  port: 8081
+spring:
+  profiles:
+    active: profile
+  config:
+    import: configserver:http://localhost:8080
+
+  cloud:
+    discovery:
+      enabled: false
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always

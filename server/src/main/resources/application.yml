@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: composite,native
+
+  cloud:
+    discovery:
+      enabled: false
+    config:
+      server:
+#        git:
+#          uri: file:./git-repo
+        composite:
+          -
+            type: vault
+            kv-version: 2
+          -
+            type: native
+            searchLocations: classpath:/configs
+        vault:
+          token: localDevelopment
+
+        health:
+          repositories:
+            test:
+              profiles: env_dev
+        bootstrap: true
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
